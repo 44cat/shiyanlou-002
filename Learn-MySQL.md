@@ -25,8 +25,8 @@ quit/exit
 CREATE DATABASE [数据库名];
 
 ## 连接数据库
---
-  CREATE TABLE 表名
+
+>  CREATE TABLE 表名
   (
   列名A 数据类型(数据长度),           (用,分隔)
   列名B 数据类型(数据长度),
