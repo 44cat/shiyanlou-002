@@ -1,6 +1,6 @@
 ------------------Learn-MYSQL--------------------
 # MySQL(一)
-
+```
 启动MySQL服务
 sudo service mysql start
 
@@ -18,7 +18,7 @@ show tables;
 
 退出
 quit/exit
-
+```
 # MySQL(二)
 
 ## 新建数据库
@@ -35,4 +35,6 @@ CREATE TABLE 表名
 ````
 ## 新建完表后只有像元组的表
 ## 通过INSERT语句向表内插入数据
+```
 INSERT INTO 表名(列名A,列名B,列名C) VALUES(值1,值2,值3);    (有列无值插入,返回NULL)
+```
