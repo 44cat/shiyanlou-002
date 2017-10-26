@@ -5,6 +5,7 @@ import json
 import os
 
 app = Flask(__name__)
+app.debug = True
 
 class Files(object):
     FilePath = os.path.join(os.path.abspath(os.path.dirname(__name__)), '..', 'files')
@@ -34,15 +35,15 @@ def index():
     
 @app.route('/files/<filename>')
 def file(filename):
-    file_item = file.get_by_filename(filename)
+    file_item = file.get_by_filenames(filename)
     if not file_item:
         abort(404)
-    return render_tenplate('file.html',file_item=file_item)
+    return render_tenplate('base.html',file_item=file_item)
     
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'),404
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1',port=3000)
+    app.run(port=3000)
  

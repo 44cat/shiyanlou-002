@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% if title %}
+        <title>{{title}} - guolaoblog</title>
+        {% else %}
+        <title>Welcome to guolaoblog</title>
+        {% endif %}
+        
+    </head>
+    <body>
+        {% block header %}
+        <h1>{{ file_item['title'] }}</h1>        
+        <p>{{ file_item['created_item'] }}</p>
+        <p>{{ file_item['content'] }}</p>
+        <img />
+        {% endblock %}
+        {% block quote %}
+        
+        <ul>
+            {% for title in title_list %}
+            <li>{{ title }}</li>
+            {% endfor %}
+        </ul>
+        
+        {% endblock %}
+    </body>
+</html>

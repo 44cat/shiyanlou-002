@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+    {% extends "base.html" %}
     <head>
-        <meta charset="Utf-8">
+        <meta charset="utf-8">
+        {% if title %}
         <title>Index</title>
+        {% endif %}
     </head>
     <body>
+        {% block header %}
+             <h1>{{ file_item['title'] }}</h1>        
+             <p>{{ file_item['created_item'] }}</p>
+             <p>{{ file_item['content'] }}</p>
+        {% endblock%}
         <ul>
+            {% block quote %}
             {% for title in title_list %}
             <li>{{ title }}</li>
             {% endfor %}
         </ul>
+        <img src="/static/img/index.jpg" width="128" height="128" />
+        {% endblock %}
     </body>
 </html>

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+    {% extends "base.html" %}
     <head>
-        <meta charset="Utf-8">
+        <meta charset="utf-8">
+        {% if title %}
         <title>404</title>
+        {% endif %}
     </head>
     <body>
+        {% block header %}
         <h1>shiyanlou 404</h1>
+        <img src="/static/img/404.png" />
+        {% endblock %}
     </body>
 </html>
