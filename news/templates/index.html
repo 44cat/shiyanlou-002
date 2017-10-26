@@ -8,13 +8,8 @@
         {% endif %}
     </head>
     <body>
-        {% block header %}
-             <h1>{{ file_item['title'] }}</h1>        
-             <p>{{ file_item['created_item'] }}</p>
-             <p>{{ file_item['content'] }}</p>
-        {% endblock%}
+        {% block quote %}
         <ul>
-            {% block quote %}
             {% for title in title_list %}
             <li>{{ title }}</li>
             {% endfor %}

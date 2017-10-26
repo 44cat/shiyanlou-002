@@ -24,7 +24,7 @@ class Files(object):
     def get_title_list(self):
         return [item['title'] for item in self._files.values()]
         
-    def get_by_filenames(self,filename):
+    def get_by_filename(self,filename):
         return self._files.get(filename)
         
 files = Files()
@@ -32,13 +32,14 @@ files = Files()
 @app.route('/')  
 def index():
     return render_template('index.html',title_list=files.get_title_list())
-    
+
 @app.route('/files/<filename>')
 def file(filename):
-    file_item = file.get_by_filenames(filename)
+    file_item = files.get_by_filename(filename)
+    title = 'HELLO'
     if not file_item:
         abort(404)
-    return render_tenplate('base.html',file_item=file_item)
+    return render_template('file1.html',file_item=file_item, title=title)
     
 @app.errorhandler(404)
 def not_found(error):
