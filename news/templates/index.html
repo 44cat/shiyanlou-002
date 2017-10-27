@@ -10,8 +10,10 @@
     <body>
         {% block quote %}
         <ul>
-            {% for title in title_list %}
-            <li>{{ title }}</li>
+            {% for file in files %}
+            <li>
+                <a href="{{ url_for('file',file_id=file.id) }}">{{ file.title }}</a>
+            </li>
             {% endfor %}
         </ul>
         <img src="/static/img/index.jpg" width="128" height="128" />

@@ -1,45 +1,60 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 from flask import Flask,render_template
-import json
-import os
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/maomao'
+db = SQLAlchemy(app)
 app.debug = True
 
-class Files(object):
-    FilePath = os.path.join(os.path.abspath(os.path.dirname(__name__)), '..', 'files')
-    
-    def __init__(self):
-        self._files = self._read_all_files()
-        
-    def _read_all_files(self):
-        result = {}
-        for filename in os.listdir(self.FilePath):
-            file_path = os.path.join(self.FilePath,filename)
-            with open(file_path) as f:
-                result[filename[:-5]] = json.load(f)
-        return result
-        
-    def get_title_list(self):
-        return [item['title'] for item in self._files.values()]
-        
-    def get_by_filename(self,filename):
-        return self._files.get(filename)
-        
-files = Files()
+class File(db.Model):
+    __tablename__ = 'files'
+    id = db.Column(db.Integer,primary_key=True)
+    title = db.Column(db.String(80),unique=True)
+    created_time = db.Column(db.DateTime)
+    category_id = db.Column(db.Integer,db.ForeignKey('CATEGORY.id'))
+    content = db.Column(db.Text)
 
+    def __init__(self,title,content,category,created_time):
+        self.title = title
+        self.content = content
+        self.created_time = created_time
+        self.category = category
+    
+    
+class Category(db.Model):
+    __tablename__ = 'CATEGORY'
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(80))
+    files = db.relationship('File')
+    
+    
+    def __init__(self,name):
+        self.name = name
+        
+
+def datas():
+    db.create_all()
+    java = Category('Java')
+    python = Category('Python')
+    file1 = File('Hello Java',datetime.utcnow(),java,'File Content - Java is cool!')    
+    file2 = File('Hello Python',datetime.utcnow(),python,'File Content - Python is cool!')
+    db.session.add(java)
+    db.session.add(python)
+    db.session.add(file1)
+    db.session.add(file2)
+    db.session.commit()
+#datas() 
 @app.route('/')  
 def index():
-    return render_template('index.html',title_list=files.get_title_list())
+    return render_template('index.html',files=File.query.all())
 
-@app.route('/files/<filename>')
-def file(filename):
-    file_item = files.get_by_filename(filename)
-    title = 'HELLO'
-    if not file_item:
-        abort(404)
-    return render_template('file1.html',file_item=file_item, title=title)
+@app.route('/files/<int:file_id>')
+def file(file_id):
+    file_item = File.query.get_or_404(file_id)
+    return render_template('file.html',file_item=file_item)
     
 @app.errorhandler(404)
 def not_found(error):

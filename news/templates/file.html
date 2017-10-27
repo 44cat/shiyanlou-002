@@ -4,14 +4,14 @@
     <head>
         <meta charset="utf-8">
         {% if title %}
-        <title>Index</title>
+        <title>File</title>
         {% endif %}
     </head>
     <body>
         {% block header %}
         <p>
            <h1>{{ file_item['title'] }}</h1>        
-           <p>{{ file_item['created_item'] }}</p>
+           <p>{{ file_item['created_time'] }}</p>
            <p>{{ file_item['content'] }}</p>
         </p>
         {% endblock %}
