@@ -3,21 +3,16 @@
 from flask import Flask,render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from pymongo import MongoClient
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/maomao'
 db = SQLAlchemy(app)
 app.debug = True
 
-client = MongoClient('127.0.0.1',27017)
-db_mongo = client.shiyanlou
-
 class File(db.Model):
     __tablename__ = 'files'
     id = db.Column(db.Integer,primary_key=True)
-    title = db.Column(db.String(80))
+    title = db.Column(db.String(80),unique=True)
     created_time = db.Column(db.DateTime)
     category_id = db.Column(db.Integer,db.ForeignKey('CATEGORY.id'))
     content = db.Column(db.Text)
@@ -28,25 +23,6 @@ class File(db.Model):
         self.created_time = created_time
         self.category = category
     
-    def add_tag(self,tag_name):
-        if tag_name not in self.tags:
-            db_mongo.files.insert_one({"name":tag_name,"File_ID":self.id})
-                      
-    def remove_tag(self,tag_name):
-        if tag_name not in self.tags:
-            return  db_mongo.files.delete_one({"name":tag_name,"File_ID":self.id})
-          
-        
-        
-    @property
-    def tags(self):
-        # tag = []
-        # tag_item = db_mongo.files.find("File_ID":self.id)
-        # for t in tag_item:
-        #     tag.append(t['name'])
-        # return tag
-        return [t['name'] for t in db_mongo.files.find({"File_ID":self.id})]
-  
     
 class Category(db.Model):
     __tablename__ = 'CATEGORY'
@@ -70,11 +46,6 @@ def datas():
     db.session.add(file1)
     db.session.add(file2)
     db.session.commit()
-    file1.add_tag('tech')
-    file1.add_tag('java')
-    file1.add_tag('linux')
-    file2.add_tag('tech')
-    file2.add_tag('python')
 #datas() 
 @app.route('/')  
 def index():
