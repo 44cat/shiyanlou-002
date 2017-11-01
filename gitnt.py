@@ -10,8 +10,21 @@ class Git_Name_Time(scrapy.Spider):
         
         return (url_tmpl.format(i) for i in range(1,5))
         
-    def parse(self,response):    
-        #yield {
-        print(response.css('div#user-repositories-list ul li div h3 a::text').re_first('\n        (.+)'))
-        print(response.css('div#user-repositories-list ul li div relative-time::attr(datetime)').extract_first())
+    def parse(self,response):
+        for repos in response.css("li.py-4"):   
+            yield {
+                "name":repos.css("div.d-inline-block a::text()").re_first('\n\s*(.*)'),
+                "update_time":repos.css("div.f6 relative-time::attr(datetime)").extract_first()
+              }
+
+
+#//*[@id="user-repositories-list"]/ul/li[1]/div[1]/h3/a*
+#//*[@id="user-repositories-list"]/ul/li[1]/div[3]/relative-tilme
+
+#"name":repos.xpath('./ul/li/div/h3//a[@itemprop="name codeRepository]/text()').re_first('\n\s*(.*)'),
+#"update_time":repos.xpath('./ul/li//relative-time/@datetime').extract_first()
+
+#repos.xpath('.//a[@itemprop="name codeRepository]/text()').re_first('\n\s*(.*)')
+#repos.xpath('.//relative-time/@datetime').extract_first()
+
 
