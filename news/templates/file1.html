@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block set %}
+<p>Hi,miao</p>
+{% endblock %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block header %}
+<p>
+    <h1>{{ file_item['title'] }}</h1>        
+    <p>{{ file_item['created_item'] }}</p>
+    <p>{{ file_item['content'] }}</p>
+</p>
+{% endblock %}
+
+<img src="/static/img/index.jpg" width="128" height="128" />
