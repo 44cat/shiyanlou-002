@@ -17,6 +17,9 @@ class SylPipeline(object):
     #def _process_syl_item(self,item):
         #item['name'] = item['name']
         #item['update_time'] = item['update_return']
+        item['commits'] = int(item['commits'])
+        item['branches'] = int(item['branches'])
+        item['releases'] = int(item['releases'])
         self.session.add(Repository(**item))
         return item
         #self.session.add(SylItem(**item))
