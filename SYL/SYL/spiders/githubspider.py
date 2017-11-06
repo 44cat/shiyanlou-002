@@ -7,7 +7,7 @@ from SYL.items import SylItem
 
 class GithubspiderSpider(scrapy.Spider):
     name = 'githubspider'
-    allowed_domains = ['giuhub.com']
+    allowed_domains = ['github.com']
     #start_urls = ['']
 
     @property

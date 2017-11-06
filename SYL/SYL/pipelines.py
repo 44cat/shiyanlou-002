@@ -16,7 +16,7 @@ class SylPipeline(object):
     
     #def _process_syl_item(self,item):
         #item['name'] = item['name']
-        #item['update_time'] = item['update_return']
+        #item['update_time'] = datetime.strptime(item['update_time'],'%Y-%m-dT%H:%M:%SZ')
         item['commits'] = int(item['commits'])
         item['branches'] = int(item['branches'])
         item['releases'] = int(item['releases'])
